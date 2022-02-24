@@ -48,16 +48,41 @@ namespace LR1
       k = Math.Round(1 + 3.219 * Math.Log10(N));
       p = 1 / k;
       // double[] intervals = new double[Convert.ToInt32(k)];
-      var intervals = new KeyValuePair<double, double>();
+      var intervals = new Dictionary<double, List<double>>();
       LensInterval = Math.Round((b - a) / k,3);
       int f = 10;
-      //for (int i = 0; i < ARR.Length; i++)
-      //{
-      //  intervals[f % (i + 1)]= ARR[i];
-      //}
 
-      //Console.WriteLine(intervals.Count);
-      Console.WriteLine("K= "+k);
+      double ind = a + LensInterval;
+
+      while (ind <= b)
+      {
+        for (int i = 0; i < ARR.Length; i++)
+        {
+
+          if (ARR[i] >= ind - LensInterval && ARR[i] < ind)
+          {
+            if (!intervals.ContainsKey(ind)) intervals[ind] = new List<double>();
+
+            intervals[ind].Add(ARR[i]);
+          }
+        }
+        ind += Math.Round(LensInterval, 3);
+        //if (b != ind && b - ind < LensInterval) ind = b;
+        Console.WriteLine($"'''{ind}'''");
+      }
+
+      double func = 0;
+      foreach (KeyValuePair<double, List<double>> item in intervals)
+      {
+        Console.WriteLine($"{item.Key}: {intervals[item.Key].Count}");
+
+        func += Math.Sqrt(Math.Pow(intervals[item.Key].Count - (N * p), 2)/(N*p));
+        Console.WriteLine($"func = {func} ;{intervals[item.Key].Count - (N * p)}");
+
+      }
+
+
+      Console.WriteLine($"K= {k} ({LensInterval})");
       Console.WriteLine("длина интервала= " + LensInterval);
 
 
