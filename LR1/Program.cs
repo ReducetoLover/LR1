@@ -14,11 +14,10 @@ namespace LR1
     //a  b границы интервала  сгенерировать N больше случ чисел от а до b
     static void LAb1()
     {
-      double XI = 0;
-      double p = 0;
-      double LensInterval = 0;
-      double k = 0;
-      double Tall=0;
+      double p;
+      double LensInterval;
+      double k;
+      double Tall = 0;
       double all = 0;
       Console.Write("A=");
       double a = Convert.ToDouble(Console.ReadLine());
@@ -37,25 +36,34 @@ namespace LR1
         Console.WriteLine(R);
       }
       double Tmath = (a + b) / 2;
-      double Tdis = Math.Pow((b - a),2) / 12;
+      double Tdis = Math.Pow((b - a), 2) / 12;
       double Pmath = Tall / N;
       for (int i = 0; i < N; i++)
       {
         all += Math.Pow((ARR[i] - Pmath), 2);
       }
-      double Pdis =Math.Sqrt(all / N);
+      double Pdis = Math.Sqrt(all / N);
 
       k = Math.Round(1 + 3.219 * Math.Log10(N));
       p = 1 / k;
-      // double[] intervals = new double[Convert.ToInt32(k)];
+
       var intervals = new Dictionary<double, List<double>>();
-      LensInterval = Math.Round((b - a) / k,3);
-      int f = 10;
+      LensInterval = (b - a) / k;
 
-      double ind = a + LensInterval;
+      double ind = a;
+      bool finish = false;
 
-      while (ind <= b)
+      while (!finish)
       {
+        if (ind < b)
+        {
+          ind += LensInterval;
+        }
+        if(ind >= b)
+        {
+          ind = b;
+          finish = true;
+        }
         for (int i = 0; i < ARR.Length; i++)
         {
 
@@ -66,8 +74,6 @@ namespace LR1
             intervals[ind].Add(ARR[i]);
           }
         }
-        ind += Math.Round(LensInterval, 3);
-        //if (b != ind && b - ind < LensInterval) ind = b;
         Console.WriteLine($"'''{ind}'''");
       }
 
@@ -76,17 +82,17 @@ namespace LR1
       {
         Console.WriteLine($"{item.Key}: {intervals[item.Key].Count}");
 
-        func += Math.Sqrt(Math.Pow(intervals[item.Key].Count - (N * p), 2)/(N*p));
-        Console.WriteLine($"func = {func} ;{intervals[item.Key].Count - (N * p)}");
+        func += Math.Pow(intervals[item.Key].Count - (N * p), 2) / (N * p);
+        Console.WriteLine($"func = {func} ;{intervals[item.Key].Count - (N * p)};{Math.Pow(intervals[item.Key].Count - (N * p), 2)}; {N*p}");
 
       }
 
 
-      Console.WriteLine($"K= {k} ({LensInterval})");
+      Console.WriteLine($"K= {k} ({LensInterval}) ||| func={Math.Sqrt(func)} ||| func2= ||| p={p}");
       Console.WriteLine("длина интервала= " + LensInterval);
 
 
-      Console.WriteLine("Тматожидание= " +Tmath);
+      Console.WriteLine("Тматожидание= " + Tmath);
       Console.WriteLine("Оценкаматожидание= " + Pmath);
       Console.WriteLine("Тдисперсия= " + Tdis);
       Console.WriteLine("Оценкадисперсии= " + Pdis);
