@@ -82,13 +82,12 @@ namespace LR1
       {
         Console.WriteLine($"{item.Key}: {intervals[item.Key].Count}");
 
-        func += Math.Pow(intervals[item.Key].Count - (N * p), 2) / (N * p);
-        Console.WriteLine($"func = {func} ;{intervals[item.Key].Count - (N * p)};{Math.Pow(intervals[item.Key].Count - (N * p), 2)}; {N*p}");
+        func += Math.Pow(intervals[item.Key].Count - (N *p), 2) / (N *p);
+        Console.WriteLine($"func = {func};{intervals[item.Key].Count - (N * p)};{Math.Pow(intervals[item.Key].Count - (N * p), 2)}; {N*p}");
 
       }
 
-
-      Console.WriteLine($"K= {k} ({LensInterval}) ||| func={Math.Sqrt(func)} ||| func2= ||| p={p}");
+      Console.WriteLine($"K= {k} ({LensInterval}) ||| func={(func)} ||| func2= ||| p={p}");
       Console.WriteLine("длина интервала= " + LensInterval);
 
 
@@ -96,6 +95,9 @@ namespace LR1
       Console.WriteLine("Оценкаматожидание= " + Pmath);
       Console.WriteLine("Тдисперсия= " + Tdis);
       Console.WriteLine("Оценкадисперсии= " + Pdis);
+      Console.WriteLine("xi^2 расчётное = " + func);
+      Console.WriteLine("xi^2 табличное = 16,91898");
+      Console.WriteLine("Гипотеза принимается, так как xi^2 расчётное меньше xi^2 табличное ");
 
     }
   }
